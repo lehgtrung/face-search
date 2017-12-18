@@ -49,7 +49,7 @@ def get_features(path, dbname, tbname):
 
 
 if __name__ == '__main__':
-    train_path = '../images/data/gt_db/train'
-    dev_path = '../images/data/gt_db/dev'
+    train_path = '../images/data/mgt_db/train'
+    dev_path = '../images/data/mgt_db/dev'
     get_features(train_path, 'facebank2', 'images_train')
     get_features(dev_path, 'facebank2', 'images_dev')

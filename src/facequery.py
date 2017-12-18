@@ -3,6 +3,7 @@ from psycopg2.extensions import AsIs
 from settings import DBNAME, USER, PASSWORD
 from collections import defaultdict
 
+
 class DBObject(object):
     _db_con = None
     _db_cur = None
@@ -49,9 +50,9 @@ def search(k=10):
 
     count = 0
     for i, image in enumerate(dev_images):
-        print i
+        # print i
         name, vector = image
-        _name = '_'.join(name.split('_')[:2])
+        _name = '_'.join(name.split('_')[:-1])
 
         vector = [float(elem) for elem in list(vector.strip('(|)').split(', '))]
         _vector = AsIs('cube(ARRAY[' + str(vector).strip('[|]') + '])')
