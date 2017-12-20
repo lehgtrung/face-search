@@ -2,6 +2,9 @@ from keras_vggface.vggface import VGGFace
 from keras.preprocessing import image
 import psycopg2
 from psycopg2.extensions import AsIs
+from local_binary_patterns import LocalBinaryPatterns
+import os
+import cv2, numpy as np
 
 
 def connect_db(dbname, user, passwrd):
@@ -34,12 +37,13 @@ def save_to_db(tbname, mapper, cur, conn):
     conn.commit()
 
 
-def get_features(path, dbname, tbname):
+def get_deep_features(path, dbname, tbname):
     top_model = VGGFace(include_top=False, input_shape=(3, 224, 224), pooling='max')
     batches, predictions = get_predictions(path, top_model)
 
     name2vector = {}
     for i, prediction in enumerate(predictions):
+        print i
         name2vector[batches.filenames[i].split('/')[-1]] = prediction
 
     conn, cur = connect_db(dbname=dbname, user='luxeuto', passwrd='Nuttertools2')
@@ -48,8 +52,42 @@ def get_features(path, dbname, tbname):
     conn.close()
 
 
+def load_images(path):
+
+    img_paths = []
+    for root, dirs, files in os.walk(path):
+        for name in dirs:
+            dirname = os.path.join(root, name)
+            local_paths = [os.path.join(dirname, image) for image in os.listdir(dirname)]
+            img_paths.extend(local_paths)
+    return img_paths
+
+
+def get_lbp_features(path, dbname, tbname):
+    name2vector = {}
+    img_paths = load_images(path)
+    print len(img_paths)
+    desc = LocalBinaryPatterns(510, 8)
+
+    for i, img_path in enumerate(img_paths):
+        print i
+        image = cv2.imread(img_path)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        hist = desc.describe(gray)
+
+        name2vector[img_path.split('/')[-1]] = hist
+
+    conn, cur = connect_db(dbname=dbname, user='luxeuto', passwrd='Nuttertools2')
+    save_to_db(tbname, name2vector, cur, conn)
+
+    conn.close()
+
+
 if __name__ == '__main__':
-    train_path = '../images/data/mgt_db/train'
-    dev_path = '../images/data/mgt_db/dev'
-    get_features(train_path, 'facebank2', 'images_train')
-    get_features(dev_path, 'facebank2', 'images_dev')
+    train_path = '/home/luxeuto/workspace/facesearch/images/data/slfw_funneled/train'
+    dev_path = '/home/luxeuto/workspace/facesearch/images/data/slfw_funneled/dev'
+    #get_deep_features(train_path, 'facebank3', 'images_train')
+    #get_deep_features(dev_path, 'facebank3', 'images_dev')
+
+    get_lbp_features(dev_path, 'facecbank_lbp', 'images_dev')
+    get_lbp_features(train_path, 'facecbank_lbp', 'images_train')

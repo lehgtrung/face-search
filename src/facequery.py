@@ -1,7 +1,8 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 from settings import DBNAME, USER, PASSWORD
-from collections import defaultdict
+from collections import defaultdict, Counter
+import time
 
 
 class DBObject(object):
@@ -17,7 +18,6 @@ class DBObject(object):
             print e
 
     def query(self, query, params=None):
-        result = None
         try:
             self._db_cur.execute(query, params)
         except Exception as e:
@@ -43,11 +43,12 @@ def most_common_or_first(names):
 
 def search(k=10):
     db = DBObject(db=DBNAME, user=USER, password=PASSWORD)
-    q = 'SELECT name, vector from images_dev limit 1000'
+    q = 'SELECT name, vector from images_dev'
     dev_images = db.query(q)
 
     q = 'SELECT name from images_train order by %s <-> vector asc limit %s'
 
+    mismatch = Counter()
     count = 0
     for i, image in enumerate(dev_images):
         # print i
@@ -57,24 +58,22 @@ def search(k=10):
         vector = [float(elem) for elem in list(vector.strip('(|)').split(', '))]
         _vector = AsIs('cube(ARRAY[' + str(vector).strip('[|]') + '])')
 
-        # print 'SELECT name from images_train order by ' + str(_vector) + ' <-> vector asc limit 10'
         candidates = db.query(q, (_vector, str(k)))
-
-        cadi_names = [candidate[0] for candidate in candidates]
-        #print cadi_names
 
         most_likely_name = most_common_or_first([candidate[0] for candidate in candidates])
 
         if most_likely_name.startswith(_name):
             count += 1
         else:
-            print name + '--' + most_likely_name
-            print name + '--' + str(cadi_names)
+            # print name + '--' + most_likely_name
+            # mismatch[most_likely_name] += 1
+            pass
 
-    return count
+    return 1.0*count/len(dev_images)
 
 
 if __name__ == '__main__':
+    start_time = time.time()
     print search()
-
+    print "--- %s seconds ---" % (time.time() - start_time)
 

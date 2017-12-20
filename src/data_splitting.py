@@ -2,8 +2,6 @@ import os
 from random import shuffle
 from shutil import copyfile
 
-PATH = '../images/gt_db'
-
 
 def split_data(src_path, dst_path, ratio=.7):
     train_path = os.path.join(dst_path, 'train/')
@@ -12,7 +10,7 @@ def split_data(src_path, dst_path, ratio=.7):
         for name in dirs:
             dirname = os.path.join(root, name)
             ori_img_names = os.listdir(dirname)
-            # images = [os.path.join(dirname, image) for image in ori_name]
+
             shuffle(ori_img_names)
             offset = int(ratio * len(ori_img_names))
 
@@ -36,7 +34,7 @@ def split_data(src_path, dst_path, ratio=.7):
 
 
 if __name__ == '__main__':
-    src_path = '/home/luxeuto/workspace/facesearch/images/gt_db'
-    dst_path = '/home/luxeuto/workspace/facesearch/images/data/gt_db'
+    src_path = '/home/luxeuto/workspace/facesearch/images/slfw_funneled'
+    dst_path = '/home/luxeuto/workspace/facesearch/images/data/slfw_funneled'
 
     split_data(src_path, dst_path)
