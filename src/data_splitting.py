@@ -31,10 +31,3 @@ def split_data(src_path, dst_path, ratio=.7):
 
             for img_name in dev_images:
                 copyfile(os.path.join(dirname, img_name), os.path.join(_dev_path, name + '_' + img_name))
-
-
-if __name__ == '__main__':
-    src_path = '/home/luxeuto/workspace/facesearch/images/slfw_funneled'
-    dst_path = '/home/luxeuto/workspace/facesearch/images/data/slfw_funneled'
-
-    split_data(src_path, dst_path)
