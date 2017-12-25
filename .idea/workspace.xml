@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="874eec9e-3c5e-46de-a983-2ac563d75df9" name="Default" comment="" />
+    <list default="true" id="874eec9e-3c5e-46de-a983-2ac563d75df9" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/.env" afterPath="$PROJECT_DIR$/src/.env" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,18 +42,18 @@
         <entry file="file://$PROJECT_DIR$/src/.env">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+              <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="391">
-                <caret line="41" column="72" lean-forward="true" selection-start-line="41" selection-start-column="72" selection-end-line="41" selection-end-column="72" />
+              <first_editor relative-caret-position="143">
+                <caret line="66" column="41" lean-forward="false" selection-start-line="66" selection-start-column="41" selection-end-line="66" selection-end-column="41" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -61,10 +64,24 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="51" column="23" lean-forward="false" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
+            <state relative-caret-position="255">
+              <caret line="48" column="27" lean-forward="false" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBcreate.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/DBcreate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="20" column="11" lean-forward="true" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+              <folding>
+                <marker date="1514228475773" expanded="true" signature="510:574" ph="CREATE TABLE... TRAIN" />
+                <marker date="1514228475773" expanded="true" signature="510:577" ph="CREATE TABLE... TRAIN" />
+                <marker date="1514228475773" expanded="true" signature="591:653" ph="CREATE TABLE... DEV" />
               </folding>
             </state>
           </provider>
@@ -133,12 +150,12 @@
         <option value="$PROJECT_DIR$/src/deepfeatures.py" />
         <option value="$PROJECT_DIR$/src/utils.py" />
         <option value="$PROJECT_DIR$/src/face_detect.py" />
-        <option value="$PROJECT_DIR$/src/features_extractor.py" />
         <option value="$PROJECT_DIR$/src/face_query.py" />
-        <option value="$PROJECT_DIR$/src/DBcreate.py" />
-        <option value="$PROJECT_DIR$/src/.env" />
         <option value="$PROJECT_DIR$/src/app.py" />
+        <option value="$PROJECT_DIR$/src/.env" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/features_extractor.py" />
+        <option value="$PROJECT_DIR$/src/DBcreate.py" />
       </list>
     </option>
   </component>
@@ -213,7 +230,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../face-search/code/cv2.ipynb" />
     <property name="settings.editor.selected.configurable" value="Errors" />
-    <property name="SearchEverywhereHistoryKey" value="se&#9;FILE&#9;file:///home/luxeuto/workspace/facesearch/src/settings.py" />
+    <property name="SearchEverywhereHistoryKey" value="db&#9;FILE&#9;file:///home/luxeuto/workspace/facesearch/src/DBcreate.py&#10;se&#9;FILE&#9;file:///home/luxeuto/workspace/facesearch/src/settings.py" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -366,7 +383,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5645646" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6336336" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42942944" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28027418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -623,16 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/features_extractor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="50" lean-forward="true" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
-          <folding>
-            <marker date="1514218176379" expanded="true" signature="1426:1480" ph="INSERT INTO " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DBconnect.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -643,33 +650,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="50" column="52" lean-forward="false" selection-start-line="50" selection-start-column="52" selection-end-line="50" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/local_binary_patterns.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DBcreate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1514222809512" expanded="true" signature="451:515" ph="CREATE TABLE... TRAIN" />
-            <marker date="1514222809512" expanded="true" signature="451:517" ph="CREATE TABLE... TRAIN" />
-            <marker date="1514222809512" expanded="true" signature="531:593" ph="CREATE TABLE... DEV" />
+            <element signature="e#0#27#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -699,29 +685,59 @@
     <entry file="file://$PROJECT_DIR$/src/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="51" column="23" lean-forward="false" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
+        <state relative-caret-position="255">
+          <caret line="48" column="27" lean-forward="false" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/features_extractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="57" column="4" lean-forward="false" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="4" />
+          <folding>
+            <marker date="1514228204849" expanded="true" signature="1426:1480" ph="INSERT INTO " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="50" column="52" lean-forward="false" selection-start-line="50" selection-start-column="52" selection-end-line="50" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="391">
-            <caret line="41" column="72" lean-forward="true" selection-start-line="41" selection-start-column="72" selection-end-line="41" selection-end-column="72" />
+          <first_editor relative-caret-position="143">
+            <caret line="66" column="41" lean-forward="false" selection-start-line="66" selection-start-column="41" selection-end-line="66" selection-end-column="41" />
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DBcreate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="20" column="11" lean-forward="true" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+          <folding>
+            <marker date="1514228475773" expanded="true" signature="510:574" ph="CREATE TABLE... TRAIN" />
+            <marker date="1514228475773" expanded="true" signature="510:577" ph="CREATE TABLE... TRAIN" />
+            <marker date="1514228475773" expanded="true" signature="591:653" ph="CREATE TABLE... DEV" />
+          </folding>
         </state>
       </provider>
     </entry>

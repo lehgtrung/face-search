@@ -1,5 +1,5 @@
 # face-search
-This is a demonstration of a real face search system
+This is a demonstration of a face search system
 
 Work flows:
 * Detect faces from the images
@@ -72,7 +72,7 @@ if method flag is not set, 'deep' method would be used
 
 Example:
 ```bash
-python app.py --path '../images/lfw_funneled' -m lbp
+python app.py --path '../images/gt_db' -m lbp
 ```
 
 
