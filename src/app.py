@@ -35,27 +35,34 @@ def main():
     if method: print '--SOURCE PATH:' + method
 
     if not input_img:
-        split_data(path, temp_path)
-        generate_faces(temp_path + '/train', work_path + '/train')
-        generate_faces(temp_path + '/dev', work_path + '/dev')
-        if method == 'deep':
-            print '--USING DEEP FEATURES EXTRACTOR'
-            insert_deep_features(work_path + '/train', 'train')
-            insert_deep_features(work_path + '/dev', 'dev')
-        if method == 'lbp':
-            insert_lbp_features(work_path + '/train', 'train')
-            insert_lbp_features(work_path + '/dev', 'dev')
-        print '--SEARCH ACCURACY: ' + str(accuracy()[0]*100) + '%'
-        print '--SEARCH TIME: ' + str(accuracy()[1]) + '(ms)'
+        if path:
+            split_data(path, temp_path)
+            generate_faces(temp_path + '/train', work_path + '/train')
+            generate_faces(temp_path + '/dev', work_path + '/dev')
+            if method == 'deep':
+                print '--USING DEEP FEATURES EXTRACTOR'
+                insert_deep_features(work_path + '/train', 'train')
+                insert_deep_features(work_path + '/dev', 'dev')
+            if method == 'lbp':
+                print '--USING LOCAL BINARY PATTERNS FEATURES EXTRACTOR'
+                insert_lbp_features(work_path + '/train', 'train')
+                insert_lbp_features(work_path + '/dev', 'dev')
+            print '--SEARCH ACCURACY: ' + str(accuracy()[0]*100) + '%'
+            print '--SEARCH TIME: ' + str(accuracy()[1]) + '(ms)'
+        elif dump_file:
+            print '--SEARCH ACCURACY: ' + str(accuracy()[0] * 100) + '%'
+            print '--SEARCH TIME: ' + str(accuracy()[1]) + '(ms)'
     else:
         if path:
             generate_faces(path, work_path + '/general')
             vector = None
             if method == 'deep':
+                print '--USING DEEP FEATURES EXTRACTOR'
                 insert_deep_features(work_path + '/general', 'gen')
                 input_dir = '/'.join(input_img.split('/')[:-2])
                 vector = get_deep_predictions(input_dir)[1][0].tolist()
             if method == 'lbp':
+                print '--USING LOCAL BINARY PATTERNS FEATURES EXTRACTOR'
                 insert_lbp_features(work_path + '/general', 'gen')
                 vector = get_lbp_predictions(input_img, LocalBinaryPatterns(510, 8))
             print '--SEARCH RESULT: ' + search(vector)[0]
@@ -63,9 +70,11 @@ def main():
         elif dump_file:
             vector = None
             if method == 'deep':
+                print '--USING DEEP FEATURES EXTRACTOR'
                 input_dir = '/'.join(input_img.split('/')[:-2])
                 vector = get_deep_predictions(input_dir)[1][0].tolist()
             if method == 'lbp':
+                print '--USING LOCAL BINARY PATTERNS FEATURES EXTRACTOR'
                 insert_lbp_features(work_path + '/general', 'gen')
                 vector = get_lbp_predictions(input_img, LocalBinaryPatterns(510, 8))
             print '--SEARCH RESULT: ' + search(vector)[0]
