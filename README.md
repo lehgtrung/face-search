@@ -47,7 +47,7 @@ python DBcreate.py
 
 I have create a dump file of funneled version of LFW dataset, to use it:
 ```bash
-psql dbname < infile
+psql dbname < ../files/facedb.sql
 ```
 dbname is the name you set in .env
 
