@@ -27,12 +27,12 @@ def main():
         if opt in ('-d', '--dumpfile'):
             dump_file = arg if arg else '../file/dumpfile.psql'
         if opt in ('-m', '--method'):
-            method = arg if arg else 'deep'
+            method = arg
 
     if path: print '--SOURCE PATH:' + path
     if input_img: print '--INPUT IMAGE:' + input_img
     if dump_file: print '--DUMP FILE:' + dump_file
-    if method: print '--SOURCE PATH:' + method
+    if method: print '--METHOD:' + method
 
     if not input_img:
         if path:

@@ -58,7 +58,6 @@ def insert_deep_features(path, table):
 def insert_lbp_features(path, table):
     name2vector = {}
     img_paths = load_images(path)
-    print len(img_paths)
     desc = LocalBinaryPatterns(510, 8)
 
     for img_path in img_paths:

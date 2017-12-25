@@ -26,6 +26,12 @@ Details instruction: https://www.digitalocean.com/community/tutorials/how-to-ins
 
 
 ## Preparation
+Create images directory
+```bash
+mkdir images
+mkdir images/data
+mkdir images/temp
+```
 Get into src directory
 ```bash
 cd /src
@@ -48,13 +54,14 @@ dbname is the name you set in .env
 To do things from scratch, download a face dataset like LFW (http://vis-www.cs.umass.edu/lfw/)
 
 ```bash
+cd ../images
 wget http://vis-www.cs.umass.edu/lfw/lfw-funneled.tgz
 ```
 
 ## Running
 
 ```bash
-python app.py --path <path-to-your-dataset>
+python app.py -path <path-to-your-dataset>
 ```
 optional flags:
 --input: test the system on a input image
@@ -62,6 +69,12 @@ optional flags:
 --method: method use for images embedding
 
 if method flag is not set, 'deep' method would be used
+
+Example:
+```bash
+python app.py --path '../images/lfw_funneled' -m lbp
+```
+
 
 ## Resources
 * Deep Face Recognition: [Link](https://www.robots.ox.ac.uk/~vgg/publications/2015/Parkhi15/parkhi15.pdf)
