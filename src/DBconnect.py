@@ -1,6 +1,5 @@
 import psycopg2
 from psycopg2.extensions import AsIs
-from settings import DB_NAME, USER, PASSWORD
 
 
 class DBObject(object):

@@ -1,4 +1,3 @@
-import cv2
 import os
 from collections import defaultdict
 from random import shuffle
@@ -22,8 +21,8 @@ def load_images(path):
     img_paths = []
     for root, dirs, files in os.walk(path):
         for name in dirs:
-            dirname = os.path.join(root, name)
-            local_paths = [os.path.join(dirname, image) for image in os.listdir(dirname)]
+            dir_name = os.path.join(root, name)
+            local_paths = [os.path.join(dir_name, image) for image in os.listdir(dir_name)]
             img_paths.extend(local_paths)
     return img_paths
 
@@ -38,8 +37,8 @@ def split_data(src_path, dst_path, ratio=.7):
     dev_path = os.path.join(dst_path, 'dev/')
     for root, dirs, files in os.walk(src_path):
         for name in dirs:
-            dirname = os.path.join(root, name)
-            ori_img_names = os.listdir(dirname)
+            dir_name = os.path.join(root, name)
+            ori_img_names = os.listdir(dir_name)
 
             shuffle(ori_img_names)
             offset = int(ratio * len(ori_img_names))
@@ -57,7 +56,7 @@ def split_data(src_path, dst_path, ratio=.7):
                 os.makedirs(_dev_path)
 
             for img_name in train_images:
-                copyfile(os.path.join(dirname, img_name), os.path.join(_train_path, name + '_' + img_name))
+                copyfile(os.path.join(dir_name, img_name), os.path.join(_train_path, name + '_' + img_name))
 
             for img_name in dev_images:
-                copyfile(os.path.join(dirname, img_name), os.path.join(_dev_path, name + '_' + img_name))
+                copyfile(os.path.join(dir_name, img_name), os.path.join(_dev_path, name + '_' + img_name))

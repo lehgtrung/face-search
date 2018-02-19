@@ -1,84 +1,69 @@
-from utils import *
 import sys, getopt
-from utils import *
 from features_extractor import *
-from face_query import accuracy, search
-from face_detect import generate_faces
+from face_query import search
+from face_detect import generate_faces, detect_face
+import os
+from DBcreate import prepare_db
 
 
 def main():
-    path = None
-    input_img = None
-    dump_file = None
-    method = 'deep'
-    work_path = '../images/data/final'
-    temp_path = '../images/data/temp'
+
+    path, img = None, None
+
+    mess = '- To index your images: ' \
+              'python app.py -path <path-to-your-images-directory>' \
+           '- To search on a certain image: ' \
+              'python app.py -image <path-to-your-image>'
     try:
-        opts,_ = getopt.getopt(sys.argv[1:], 'p:i:d:m', ['path=',
-                                                         'input=', 'dumpfile=', 'method='])
+        opts, _ = getopt.getopt(sys.argv[1:], 'p:i:h', ['path=', 'image=', 'help'])
     except getopt.GetoptError:
-        print 'USAGE: python app.py -p <imagespath> -i <inputimage> -d <dumpfile>'
+        print mess
         sys.exit(2)
+
     for opt, arg in opts:
         if opt in ('-p', '--path'):
-            path = arg
-        if opt in ('-i', '--input'):
-            input_img = arg
-        if opt in ('-d', '--dumpfile'):
-            dump_file = arg if arg else '../file/dumpfile.psql'
-        if opt in ('-m', '--method'):
-            method = arg
+            if os.path.isdir(arg):
+                path = arg
+            else:
+                print 'Path must link to a directory'
+                sys.exit(1)
 
-    if path: print '--SOURCE PATH:' + path
-    if input_img: print '--INPUT IMAGE:' + input_img
-    if dump_file: print '--DUMP FILE:' + dump_file
-    if method: print '--METHOD:' + method
+        if opt in ('-i', '--image'):
+            if os.path.isfile(arg):
+                img = arg
+            else:
+                print 'Image path must link to a image'
+                sys.exit(1)
 
-    if not input_img:
-        if path:
-            split_data(path, temp_path)
-            generate_faces(temp_path + '/train', work_path + '/train')
-            generate_faces(temp_path + '/dev', work_path + '/dev')
-            if method == 'deep':
-                print '--USING DEEP FEATURES EXTRACTOR'
-                insert_deep_features(work_path + '/train', 'train')
-                insert_deep_features(work_path + '/dev', 'dev')
-            if method == 'lbp':
-                print '--USING LOCAL BINARY PATTERNS FEATURES EXTRACTOR'
-                insert_lbp_features(work_path + '/train', 'train')
-                insert_lbp_features(work_path + '/dev', 'dev')
-            print '--SEARCH ACCURACY: ' + str(accuracy()[0]*100) + '%'
-            print '--SEARCH TIME: ' + str(accuracy()[1]) + '(ms)'
-        elif dump_file:
-            print '--SEARCH ACCURACY: ' + str(accuracy()[0] * 100) + '%'
-            print '--SEARCH TIME: ' + str(accuracy()[1]) + '(ms)'
-    else:
-        if path:
-            generate_faces(path, work_path + '/general')
-            vector = None
-            if method == 'deep':
-                print '--USING DEEP FEATURES EXTRACTOR'
-                insert_deep_features(work_path + '/general', 'gen')
-                input_dir = '/'.join(input_img.split('/')[:-2])
-                vector = get_deep_predictions(input_dir)[1][0].tolist()
-            if method == 'lbp':
-                print '--USING LOCAL BINARY PATTERNS FEATURES EXTRACTOR'
-                insert_lbp_features(work_path + '/general', 'gen')
-                vector = get_lbp_predictions(input_img, LocalBinaryPatterns(510, 8))
-            print '--SEARCH RESULT: ' + search(vector)[0]
-            print '--SEARCH TIME: ' + search(vector)[1] + '(ms)'
-        elif dump_file:
-            vector = None
-            if method == 'deep':
-                print '--USING DEEP FEATURES EXTRACTOR'
-                input_dir = '/'.join(input_img.split('/')[:-2])
-                vector = get_deep_predictions(input_dir)[1][0].tolist()
-            if method == 'lbp':
-                print '--USING LOCAL BINARY PATTERNS FEATURES EXTRACTOR'
-                insert_lbp_features(work_path + '/general', 'gen')
-                vector = get_lbp_predictions(input_img, LocalBinaryPatterns(510, 8))
-            print '--SEARCH RESULT: ' + search(vector)[0]
-            print '--SEARCH TIME: ' + search(vector)[1] + '(ms)'
+        if opt in ('-h', '--help'):
+            print mess
+            sys.exit(2)
+
+    if path:
+        print '--SOURCE PATH:' + path
+
+        prepare_db()
+
+        # Create a temporary directory to store cropped face images
+        faces_path = '../images/faces'
+        generate_faces(path, faces_path)
+
+        # Generate vectors from images and store them in database
+        insert_deep_features(faces_path, 'images')
+
+    if img:
+        print '--IMAGE PATH:' + img
+
+        # Detect the face from the image
+        face_img = detect_face(img)
+
+        # Get the vector from that face
+        vector = get_single_predictions(face_img)
+
+        # Show results
+        person, time = search(vector)
+        print '--PERSON: ' + str(person)
+        print '--SEARCH TIME: ' + str(time)
 
 
 if __name__ == '__main__':

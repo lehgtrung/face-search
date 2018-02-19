@@ -1,16 +1,19 @@
 from DBconnect import *
 from utils import *
 import time
+from settings import DB_NAME, USER, PASSWORD
 
 
 def search(vector, k=10):
     db = DBObject(db=DB_NAME, user=USER, password=PASSWORD)
-    q = 'SELECT name from train order by %s <-> vector asc limit %s'
-    _vector = AsIs('cube(ARRAY[' + str(vector).strip('[|]') + '])')
+    q = 'SELECT name from images order by vector <-> %s asc limit %s'
+    _vector = AsIs('cube(ARRAY[' + ','.join(str(vector).strip('[|]').split()) + '])')
     start = time.time()
-    results = db.make_query(q, (_vector, str(k)),q_type='query')
+    try:
+        results = db.make_query(q, (_vector, str(k)),q_type='query')
+    except Exception as e:
+        raise e
     total = time.time() - start
-    # return [' '.join(result[0].split('_')[:-1]) for result in results]
     return ' '.join(results[0][0].split('_')[:-1]), total
 
 

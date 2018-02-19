@@ -3,6 +3,19 @@ from keras.preprocessing import image
 from DBconnect import *
 from utils import *
 from local_binary_patterns import LocalBinaryPatterns
+import cv2
+from psycopg2.extensions import AsIs
+from settings import DB_NAME, USER, PASSWORD, TABLE
+import numpy as np
+
+
+def get_single_predictions(face_img):
+    if face_img.shape[2] == 3:
+        face_img = face_img.transpose((-1, 0, 1))
+    face_img = face_img[np.newaxis, ...]
+    model = VGGFace(include_top=False, input_shape=(3, 224, 224), pooling='max')
+    prediction = model.predict(face_img)
+    return prediction
 
 
 def get_deep_predictions(path, batch_size=1):
@@ -13,7 +26,8 @@ def get_deep_predictions(path, batch_size=1):
     :return: batches and vector representation of each images
     """
     model = VGGFace(include_top=False, input_shape=(3, 224, 224), pooling='max')
-    gen = image.ImageDataGenerator(rescale=1./255)
+    # gen = image.ImageDataGenerator(rescale=1./255)
+    gen = image.ImageDataGenerator()
 
     _batches = gen.flow_from_directory(path, target_size=(224, 224), batch_size=batch_size, shuffle=False)
     _predictions = model.predict_generator(_batches, val_samples=_batches.n)
