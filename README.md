@@ -5,7 +5,7 @@ Work flows:
 * Detect faces from the images
 * Crop the face to 224x224 pixels
 * Align the face
-* Feed face images through a feature extractor (Deep-face feature, Local binary patterns, Fisher face, etc)
+* Feed face images through a feature extractor (I use vgg face feature extractor)
 * Save the vector representations into database along with images names and url
 * Queries run very fast thanks to Postgres's CUBE extension
 
@@ -26,12 +26,6 @@ Details instruction: https://www.digitalocean.com/community/tutorials/how-to-ins
 
 
 ## Preparation
-Create images directory
-```bash
-mkdir images
-mkdir images/data
-mkdir images/temp
-```
 Get into src directory
 ```bash
 cd /src
@@ -40,41 +34,30 @@ Open .env file then enter your config (DBName, USER, PASSWORD)
 ```bash
 vi .env
 ```
-Database creation:
-```bash
-python DBcreate.py
-```
-
-I have create a dump file of funneled version of LFW dataset, to use it:
-```bash
-psql dbname < ../files/facedb.sql
-```
-dbname is the name you set in .env
 
 To do things from scratch, download a face dataset like LFW (http://vis-www.cs.umass.edu/lfw/)
 
 ```bash
 cd ../images
 wget http://vis-www.cs.umass.edu/lfw/lfw-funneled.tgz
+tar zxvf lfw-funneled.tgz
 ```
 
 ## Running
-
+To index your images data, use:
 ```bash
-python app.py -path <path-to-your-dataset>
-```
-optional flags:
---input: test the system on a input image
---dumpfile: use database dump in files/facedb.sql
---method: method use for images embedding
-
-if method flag is not set, 'deep' method would be used
-
-Example:
-```bash
-python app.py --path '../images/gt_db' -m lbp
+python app.py -path <path-to-your-images-directory>
 ```
 
+To identify a person, use:
+```bash
+python app.py -image <path-to-your-image>
+```
+
+To get help, use:
+```bash
+python app.py -h
+```
 
 ## Resources
 * Deep Face Recognition: [Link](https://www.robots.ox.ac.uk/~vgg/publications/2015/Parkhi15/parkhi15.pdf)
