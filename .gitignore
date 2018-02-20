@@ -102,4 +102,4 @@ ENV/
 .mypy_cache/
 
 # ideas
-.idea
+.idea/

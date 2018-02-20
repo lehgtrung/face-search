@@ -14,11 +14,11 @@ def prepare_db():
     cur = con.cursor()
     try:
         cur.execute('CREATE DATABASE ' + DB_NAME)
-        logging.info('DROP OLD DATABASE')
     except psycopg2.Error as e:
+        logging.info('DROP OLD DATABASE')
         logging.info('CREATE NEW DATABASE')
-    cur.execute('DROP DATABASE ' + DB_NAME)
-    cur.execute('CREATE DATABASE ' + DB_NAME)
+        cur.execute('DROP DATABASE ' + DB_NAME)
+        cur.execute('CREATE DATABASE ' + DB_NAME)
     cur.close()
     con.close()
 
