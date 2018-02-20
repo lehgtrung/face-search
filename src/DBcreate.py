@@ -5,6 +5,9 @@ import logging
 
 
 def prepare_db():
+    """
+    Create a database with name in .env
+    """
     try:
         con = psycopg2.connect(dbname='postgres', user=USER, password=PASSWORD)
     except psycopg2.Error as e:

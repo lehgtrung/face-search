@@ -10,6 +10,11 @@ import numpy as np
 
 
 def get_single_predictions(face_img):
+    """
+        face_img: cropped face image, type: numpy array
+
+        Return: vector representation of the face
+    """
     if face_img.shape[2] == 3:
         face_img = face_img.transpose((-1, 0, 1))
     face_img = face_img[np.newaxis, ...]
@@ -20,10 +25,10 @@ def get_single_predictions(face_img):
 
 def get_deep_predictions(path, batch_size=1):
     """
-    :param path: path to directory containing sub directories of images
-    :param model: deep feature extractor model
-    :param batch_size: default batch size is 1 due to computer's limitation
-    :return: batches and vector representation of each images
+        Path: path to the image directory
+        batch_size: default batch size is 1 due to computer's limitation
+
+        Return: batches and vector representation of each images
     """
     model = VGGFace(include_top=False, input_shape=(3, 224, 224), pooling='max')
     # gen = image.ImageDataGenerator(rescale=1./255)
@@ -43,10 +48,9 @@ def get_lbp_predictions(path, desc):
 
 def save_to_db(table, mapper, db):
     """
-    :param table: table name
-    :param mapper: dictionary mapping from person name to vector representation
-    :param db: db object
-    :return: None
+        table: table name
+        mapper: dictionary mapping from person name to vector representation
+        db: db object
     """
     for i, key in enumerate(mapper.keys()):
         _name = key

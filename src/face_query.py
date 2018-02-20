@@ -5,6 +5,11 @@ from settings import DB_NAME, USER, PASSWORD
 
 
 def search(vector, k=10):
+    """
+        vector: numpy array vector
+
+        Return: predicted name of the face and search time
+    """
     db = DBObject(db=DB_NAME, user=USER, password=PASSWORD)
     q = 'SELECT name from images order by vector <-> %s asc limit %s'
     _vector = AsIs('cube(ARRAY[' + ','.join(str(vector).strip('[|]').split()) + '])')
