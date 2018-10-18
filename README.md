@@ -64,6 +64,6 @@ python app.py -h
 * Face search at scale, 80 million gallery: [Link](https://arxiv.org/abs/1507.07242)
 
 ## Author
-* **Trung Le Hoang** (trungkak@gmail.com)
+* **Trung Le Hoang** (le.hg.trung@gmail.com)
 
 
