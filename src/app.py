@@ -1,9 +1,9 @@
 import sys, getopt
-from features_extractor import *
+from face import *
 from face_query import search
 from face_detect import generate_faces, detect_face
 import os
-from DBcreate import prepare_db
+from db import prepare_db
 
 
 def main():
@@ -49,7 +49,7 @@ def main():
         generate_faces(path, faces_path)
 
         # Generate vectors from images and store them in database
-        insert_deep_features(faces_path, 'images')
+        insert_features(faces_path, 'images')
 
     if img:
         print '--IMAGE PATH:' + img

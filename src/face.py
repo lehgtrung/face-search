@@ -1,13 +1,56 @@
 from keras_vggface.vggface import VGGFace
 from keras.preprocessing import image
-from DBconnect import *
-from utils import *
-from local_binary_patterns import LocalBinaryPatterns
-import cv2
+from db import DBObject
 from psycopg2.extensions import AsIs
 from settings import DB_NAME, USER, PASSWORD, TABLE
 import numpy as np
+import logging
+import cv2
+from utils import *
 
+
+def detect_face(img_path, cc_path='../files/haarcascade_frontalface_default.xml'):
+    """
+    Detect the face from the image, return colored face
+    """
+
+    cc = cv2.CascadeClassifier(os.path.abspath(cc_path))
+    img_path = os.path.abspath(img_path)
+    img = cv2.imread(img_path)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    faces = cc.detectMultiScale(gray, 1.3, 5)
+    roi_color = None
+
+    if len(faces) == 0:
+        logging.exception(img_path + ': No face found')
+    else:
+        x,y,w,h = faces[0]
+        _h, _w = compute_size(h, w)
+        roi_color = img[y - _h:y + h + _h, x - _w:x + w + _w]
+
+    return roi_color
+
+
+def generate_faces(src_path, dst_path):
+    """
+    Generate faces from source directory and store cropped faces in destination directory
+    """
+    for root, dirs, files in os.walk(src_path):
+        for name in dirs:
+            dir_name = os.path.join(root, name)
+            images = os.listdir(dir_name)
+            images = [image for image in images if image.endswith('jpg')]
+
+            _path = os.path.join(dst_path, name)
+
+            if not os.path.exists(_path):
+                os.makedirs(_path)
+
+            for image in images:
+                face = detect_face(os.path.join(dir_name, image))
+                if face is None: continue
+                cv2.imwrite(os.path.join(_path, image), face)
 
 def get_single_predictions(face_img):
     """
@@ -23,27 +66,19 @@ def get_single_predictions(face_img):
     return prediction
 
 
-def get_deep_predictions(path, batch_size=1):
+def get_batch_predictions(path, batch_size=32):
     """
         Path: path to the image directory
-        batch_size: default batch size is 1 due to computer's limitation
+        batch_size: default batch size is 32
 
         Return: batches and vector representation of each images
     """
     model = VGGFace(include_top=False, input_shape=(3, 224, 224), pooling='max')
-    # gen = image.ImageDataGenerator(rescale=1./255)
-    gen = image.ImageDataGenerator()
+    gen = image.ImageDataGenerator(rescale=1./255)
 
     _batches = gen.flow_from_directory(path, target_size=(224, 224), batch_size=batch_size, shuffle=False)
     _predictions = model.predict_generator(_batches, val_samples=_batches.n)
     return _batches, _predictions
-
-
-def get_lbp_predictions(path, desc):
-    image = cv2.imread(path)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    hist = desc.describe(gray)
-    return hist
 
 
 def save_to_db(table, mapper, db):
@@ -62,8 +97,8 @@ def save_to_db(table, mapper, db):
         print str(i) + ' records inserted!'
 
 
-def insert_deep_features(path, table):
-    batches, predictions = get_deep_predictions(path)
+def insert_features(path, table):
+    batches, predictions = get_batch_predictions(path)
 
     name2vector = {}
     for i, prediction in enumerate(predictions):
@@ -71,17 +106,3 @@ def insert_deep_features(path, table):
 
     db = DBObject(db=DB_NAME, user=USER, password=PASSWORD)
     save_to_db(table, name2vector, db)
-
-
-def insert_lbp_features(path, table):
-    name2vector = {}
-    img_paths = load_images(path)
-    desc = LocalBinaryPatterns(510, 8)
-
-    for img_path in img_paths:
-        hist = get_lbp_predictions(img_path, desc)
-        name2vector[img_path.split('/')[-1]] = hist
-
-    db = DBObject(db=DB_NAME, user=USER, password=PASSWORD)
-    save_to_db(table, name2vector, db)
-
